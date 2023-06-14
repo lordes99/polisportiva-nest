@@ -1,0 +1,70 @@
+FROM ubuntu:22.04
+
+ARG JAVA_VERSION=17
+ARG GRAALVM_VERSION=22.3.2
+ARG GRAALVM_PLATFORM=linux-amd64
+ARG GRAALVM_DIRECTORY_NAME="graalvm-ce-java$JAVA_VERSION-$GRAALVM_VERSION"
+
+WORKDIR /home
+
+# Install curl
+RUN apt-get update && apt-get install -y curl
+
+# Java Version and GraalVM Version/Platform
+#ARG JAVA_VERSION
+#ARG GRAALVM_VERSION
+#ARG GRAALVM_PLATFORM
+
+# Link to download GraalVM
+#ARG GRAALVM_DOWNLOAD_BASE_LINK=https://github.com/graalvm/graalvm-ce-builds/releases/download/
+#ARG GRAALVM_DOWNLOAD_LINK=$GRAALVM_DOWNLOAD_BASE_LINK/vm-$GRAALVM_VERSION/graalvm-ce-java$JAVA_VERSION-$GRAALVM_PLATFORM-$GRAALVM_VERSION.tar.gz
+
+# Download GraalVM
+#RUN curl -L -O $GRAALVM_DOWNLOAD_LINK
+#ARG GRAALVM_DIRECTORY_NAME
+#ARG GRAALVM_TAR_GZ="graalvm-ce-java$JAVA_VERSION-$GRAALVM_PLATFORM-$GRAALVM_VERSION.tar.gz"
+#RUN tar -xf $GRAALVM_TAR_GZ
+#RUN rm $GRAALVM_TAR_GZ
+
+# GraalVM environment variable settings
+#ENV GRAALVM_HOME=/home/$GRAALVM_DIRECTORY_NAME
+#ENV PATH=/home/$GRAALVM_DIRECTORY_NAME/bin:$PATH
+#ENV JAVA_HOME=/home/$GRAALVM_DIRECTORY_NAME
+
+#RUN $JAVA_HOME/bin/gu install nodejs
+
+#COPY . .
+
+#RUN $JAVA_HOME/bin/npm install
+
+#EXPOSE 3000
+
+#CMD $JAVA_HOME/bin/node ./bin/www
+
+#RUN java --version
+
+# Usa l'immagine di base di Node.js
+FROM ghcr.io/graalvm/nodejs:ol9-java11-22.3.2
+
+LABEL authors="Lorenzo Destriere"
+
+# Imposta il percorso di lavoro all'interno del contenitore
+WORKDIR /app
+
+# Copia i file package.json e package-lock.json nella directory di lavoro
+COPY package*.json ./
+
+# Copia il file package-lock.json, se presente
+COPY package-lock.json ./
+
+# Copia il resto del codice dell'applicazione nella directory di lavoro
+COPY . .
+
+# Copia i file sorgente del progetto
+COPY src/ ./src/
+
+# Monta il codice sorgente del progetto all'interno del container
+VOLUME ["/app/src"]
+
+# Avvia il server o l'applicazione
+CMD ["npm", "start"]
