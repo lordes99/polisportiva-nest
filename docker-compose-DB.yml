@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  nest-local-db:
+    container_name: nest-local-db
+    image: postgres:11.5
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: polisportiva
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./initDb/polisportivadb.sql:/docker-entrypoint-initdb.d/init.sql
