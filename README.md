@@ -71,3 +71,26 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+## Start Polisportiva
+
+- Author - [Lorenzo Destriere](https://github.com/lordes99)
+
+## Description
+
+Application for University Federico II.
+
+## Installation
+
+```bash
+$ npm install
+```
+
+## Start in Local
+
+## Dockerize
+
+```bash
+$ docker-compose -f /home/lorenzo/UniProject/OSMCI/nestJs/polisportiva-nest/docker-compose.yml -p polisportiva-nest up -d db
+```

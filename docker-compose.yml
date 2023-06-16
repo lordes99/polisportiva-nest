@@ -29,7 +29,7 @@ services:
 
   poli-nest:
     build :
-      dockerfile: Dockerfile.graalvm
+      dockerfile: Dockerfile
       context: .
     expose:
       - "3000"
