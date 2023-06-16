@@ -89,8 +89,19 @@ $ npm install
 
 ## Start in Local
 
+```bash
+$ npm run start
+```
+
 ## Dockerize
 
+Eseguire il seguente comando nella cartella del progetto. Così si utilizza node:18.12.1
+
 ```bash
-$ docker-compose -f /home/lorenzo/UniProject/OSMCI/nestJs/polisportiva-nest/docker-compose.yml -p polisportiva-nest up -d db
+$ make up
+```
+
+Per utilizzare la graalVm:
+```bash
+$ make upGraalVm
 ```

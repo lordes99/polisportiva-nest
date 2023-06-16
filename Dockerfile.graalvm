@@ -57,8 +57,11 @@ COPY package*.json ./
 # Copia il file package-lock.json, se presente
 COPY package-lock.json ./
 
-# Copia il resto del codice dell'applicazione nella directory di lavoro
-COPY . .
+# Copia il file tsconfig.json
+COPY tsconfig.json ./
+
+# Copia la directory node_modules dal tuo ambiente di sviluppo al container
+COPY node_modules/ ./node_modules/
 
 # Copia i file sorgente del progetto
 COPY src/ ./src/

@@ -29,7 +29,7 @@ services:
 
   poli-nest:
     build :
-      dockerfile: Dockerfile
+      dockerfile: ${DOCKERFILE}
       context: .
     expose:
       - "3000"

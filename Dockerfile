@@ -15,9 +15,6 @@ COPY package-lock.json ./
 # Copia il file tsconfig.json
 COPY tsconfig.json ./
 
-## Installa il pacchetto NestJS CLI globalmente
-#RUN npm install -g @nestjs/cli
-RUN #npm ci
 # Copia la directory node_modules dal tuo ambiente di sviluppo al container
 COPY node_modules/ ./node_modules/
 
