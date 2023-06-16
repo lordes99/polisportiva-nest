@@ -46,6 +46,9 @@ RUN apt-get update && apt-get install -y curl
 # Usa l'immagine di base di Node.js
 FROM ghcr.io/graalvm/nodejs:ol9-java11-22.3.2
 
+# Imposta la variabile d'ambiente DB_HOST
+ENV DB_HOST=10.10.0.2
+
 LABEL authors="Lorenzo Destriere"
 
 # Imposta il percorso di lavoro all'interno del contenitore

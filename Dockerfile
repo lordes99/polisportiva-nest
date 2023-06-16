@@ -1,6 +1,9 @@
 # Utilizza un'immagine di base che contiene già le dipendenze installate
 FROM node:18.12.1
 
+# Imposta la variabile d'ambiente DB_HOST
+ENV DB_HOST=10.10.0.2
+
 LABEL authors="Lorenzo Destriere"
 
 # Imposta la directory di lavoro all'interno del container
