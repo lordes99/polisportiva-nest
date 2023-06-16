@@ -4,18 +4,24 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
 import { UsersModule } from './users/user.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: '10.10.0.2',
-      port: 5432,
-      username: 'admin',
-      password: 'admin',
-      database: 'polisportiva',
-      // entities: [User],
-      synchronize: true,
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get<string>('DB_HOST'),
+        port: 5432,
+        username: 'admin',
+        password: 'admin',
+        database: 'polisportiva',
+        // entities: [User],
+        synchronize: false,
+      }),
+      inject: [ConfigService], // Inietta il ConfigService nella factory function
     }),
     UsersModule,
   ],
