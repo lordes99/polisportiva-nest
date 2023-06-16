@@ -1,3 +1,48 @@
+
+## Start Polisportiva
+
+- Author - [Lorenzo Destriere](https://github.com/lordes99)
+
+## Description
+
+Application for University Federico II.
+
+## Installation
+
+```bash
+$ npm install
+```
+
+## Start in Local
+
+Bisogna prima far partire il db:
+
+```bash
+$ make upOnlyDb
+```
+
+poi l'applicativo in locale:
+
+```bash
+$ npm run start --DB_HOST=localhost
+```
+
+## Dockerize
+
+Eseguire il seguente comando nella cartella del progetto. Così si utilizza node:18.12.1
+
+```bash
+$ make up
+```
+
+Per utilizzare la graalVm:
+```bash
+$ make upGraalVm
+```
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -72,36 +117,3 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](LICENSE).
 
-
-## Start Polisportiva
-
-- Author - [Lorenzo Destriere](https://github.com/lordes99)
-
-## Description
-
-Application for University Federico II.
-
-## Installation
-
-```bash
-$ npm install
-```
-
-## Start in Local
-
-```bash
-$ npm run start
-```
-
-## Dockerize
-
-Eseguire il seguente comando nella cartella del progetto. Così si utilizza node:18.12.1
-
-```bash
-$ make up
-```
-
-Per utilizzare la graalVm:
-```bash
-$ make upGraalVm
-```
