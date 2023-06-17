@@ -1,5 +1,6 @@
 
 ## Start Polisportiva
+<a href="https://paypal.me/lordest" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
 
 - Author - [Lorenzo Destriere](https://github.com/lordes99)
 
