@@ -18,7 +18,7 @@ export class UsersService {
   }
 
   findOne(id: number): Promise<User | null> {
-    return this.usersRepository.findOneBy({ id });
+    return this.usersRepository.findOne({ where: { id } });
   }
 
   async remove(id: number): Promise<void> {
@@ -26,16 +26,11 @@ export class UsersService {
   }
 
   async createUser(user: User): Promise<User> {
-    const newAddress = await this.addressRepository.save(user.address);
+    user.address = await this.addressRepository.save(user.address);
     // newAddress.then((a) => {
     //   console.log('ok');
     //   user.address = a;
     // });
-    user.address = newAddress;
-    // const newUser: User = this.userRepository.create(createUserDto);
-    // const newUser = new User();
-    // // newUser.name = user.name;
-    // newUser.email = user.email;
 
     return this.usersRepository.save(user);
   }
