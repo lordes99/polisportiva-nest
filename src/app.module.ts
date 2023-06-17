@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
 import { UsersModule } from './users/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { Address } from './address/address.entity';
 
 @Module({
   imports: [
@@ -18,8 +19,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         username: 'admin',
         password: 'admin',
         database: 'polisportiva',
-        // entities: [User],
-        synchronize: false,
+        entities: [User, Address],
+        synchronize: true,
       }),
       inject: [ConfigService], // Inietta il ConfigService nella factory function
     }),
