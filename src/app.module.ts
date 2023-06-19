@@ -7,7 +7,7 @@ import { UsersModule } from './users/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Address } from './address/address.entity';
 import { PriceList } from './priceList/priceList.entity';
-import { SportField } from './sportsField/sportField.entity';
+import { SportsField } from './sportsField/sportsField.entity';
 import { SportsFacility } from './sportsFacility/sportsFacility.entity';
 
 @Module({
@@ -22,7 +22,7 @@ import { SportsFacility } from './sportsFacility/sportsFacility.entity';
         username: 'admin',
         password: 'admin',
         database: 'polisportiva',
-        entities: [User, Address, PriceList, SportField, SportsFacility],
+        entities: [User, Address, PriceList, SportsField, SportsFacility],
         synchronize: true,
       }),
       inject: [ConfigService], // Inietta il ConfigService nella factory function

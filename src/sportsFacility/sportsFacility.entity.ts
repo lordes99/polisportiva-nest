@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { Address } from '../address/address.entity';
 import { User } from '../users/user.entity';
-import { SportField } from '../sportsField/sportField.entity';
+import { SportsField } from '../sportsField/sportsField.entity';
 
 @Entity()
 export class SportsFacility {
@@ -29,6 +29,6 @@ export class SportsFacility {
   @ManyToOne(() => User, (user) => user.sportFacilities)
   user: User;
 
-  @OneToMany(() => SportField, (sportField) => sportField.sportFacility)
-  sportFields: SportField[];
+  @OneToMany(() => SportsField, (sportField) => sportField.sportFacility)
+  sportFields: SportsField[];
 }

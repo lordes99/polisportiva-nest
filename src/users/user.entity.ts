@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Address } from '../address/address.entity';
-import { SportField } from '../sportsField/sportField.entity';
+import { SportsField } from '../sportsField/sportsField.entity';
 import { SportsFacility } from '../sportsFacility/sportsFacility.entity';
 
 @Entity()
@@ -35,8 +35,8 @@ export class User {
   @ManyToOne(() => Address, (address) => address.users)
   address: Address;
 
-  @OneToMany(() => SportField, (sportField) => sportField.user)
-  sportFields: SportField[];
+  @OneToMany(() => SportsField, (sportField) => sportField.user)
+  sportFields: SportsField[];
 
   @OneToMany(() => SportsFacility, (sportFacilities) => sportFacilities.user)
   sportFacilities: SportsFacility[];

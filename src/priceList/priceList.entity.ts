@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { SportField } from '../sportsField/sportField.entity';
+import { SportsField } from '../sportsField/sportsField.entity';
 
 @Entity()
 export class PriceList {
@@ -9,6 +9,6 @@ export class PriceList {
   @Column()
   pricePerHour: number;
 
-  @OneToMany(() => SportField, (sportField) => sportField.priceList)
-  sportFields: SportField[];
+  @OneToMany(() => SportsField, (sportField) => sportField.priceList)
+  sportFields: SportsField[];
 }

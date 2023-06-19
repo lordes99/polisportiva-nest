@@ -4,7 +4,7 @@ import { User } from '../users/user.entity';
 import { SportsFacility } from '../sportsFacility/sportsFacility.entity';
 
 @Entity()
-export class SportField {
+export class SportsField {
   @PrimaryGeneratedColumn()
   id: number;
 
