@@ -1,5 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Address } from '../address/address.entity';
+import { SportField } from '../sportsField/sportField.entity';
+import { SportsFacility } from '../sportsFacility/sportsFacility.entity';
 
 @Entity()
 export class User {
@@ -26,4 +34,10 @@ export class User {
 
   @ManyToOne(() => Address, (address) => address.users)
   address: Address;
+
+  @OneToMany(() => SportField, (sportField) => sportField.user)
+  sportFields: SportField[];
+
+  @OneToMany(() => SportsFacility, (sportFacilities) => sportFacilities.user)
+  sportFacilities: SportsFacility[];
 }
