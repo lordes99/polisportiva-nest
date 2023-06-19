@@ -9,6 +9,7 @@ import { Address } from './address/address.entity';
 import { PriceList } from './priceList/priceList.entity';
 import { SportsField } from './sportsField/sportsField.entity';
 import { SportsFacility } from './sportsFacility/sportsFacility.entity';
+import { SportsFieldModule } from './sportsField/sportsField.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { SportsFacility } from './sportsFacility/sportsFacility.entity';
       inject: [ConfigService], // Inietta il ConfigService nella factory function
     }),
     UsersModule,
+    SportsFieldModule,
   ],
   controllers: [AppController],
   providers: [AppService],
