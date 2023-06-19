@@ -22,7 +22,6 @@ services:
       - "5432:5432"
     volumes:
       - postgres-volume:/var/lib/postgresql/data
-      - ./initDb/polisportivadb.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       network:
         ipv4_address: 10.10.0.2
