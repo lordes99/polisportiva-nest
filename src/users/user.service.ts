@@ -34,4 +34,8 @@ export class UsersService {
 
     return this.usersRepository.save(user);
   }
+
+  async deleteUserByid(id: number) {
+    return this.usersRepository.delete(id);
+  }
 }
