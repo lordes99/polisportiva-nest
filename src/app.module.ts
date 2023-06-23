@@ -10,6 +10,7 @@ import { PriceList } from './priceList/priceList.entity';
 import { SportsField } from './sportsField/sportsField.entity';
 import { SportsFacility } from './sportsFacility/sportsFacility.entity';
 import { SportsFieldModule } from './sportsField/sportsField.module';
+import { SportsFacilityModule } from './sportsFacility/sportsFacility.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { SportsFieldModule } from './sportsField/sportsField.module';
     }),
     UsersModule,
     SportsFieldModule,
+    SportsFacilityModule,
   ],
   controllers: [AppController],
   providers: [AppService],
