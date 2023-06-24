@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { SportsFacility } from './sportsFacility.entity';
 import { SportsField } from '../sportsField/sportsField.entity';
 import { User } from '../users/user.entity';
@@ -50,15 +50,33 @@ export class SportsFacilityService {
     facilityId: number,
     sportsField: SportsField,
   ): Promise<SportsField> {
-    const sportFacility = new SportsFacility();
-    sportFacility.id = facilityId;
-    sportsField.sportFacility = sportFacility;
+    const sportFacility = await this.sportsFacilityRepository.findOne({
+      where: { id: facilityId },
+      relations: ['user'],
+    });
+    if (sportFacility) {
+      sportsField.sportFacility = sportFacility;
+
+      this.assignUserToSportField(sportsField, sportFacility);
+    } else {
+      throw new NotFoundException(
+        'No sport facility found for the specified ID',
+      );
+    }
+
     this.assignEmptyFieldsType(sportsField);
     sportsField.priceList = await this.priceListRepository.save(
       sportsField.priceList,
     );
 
     return this.sportsFieldRepository.save(sportsField);
+  }
+
+  private assignUserToSportField(
+    sportsField: SportsField,
+    sportFacility: SportsFacility,
+  ) {
+    sportsField.user = sportFacility.user;
   }
 
   private assignEmptyFieldsType(sportsField: SportsField) {

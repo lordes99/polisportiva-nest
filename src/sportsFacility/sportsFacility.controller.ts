@@ -101,4 +101,6 @@ export class SportsFacilityController {
       return res.status(404).json({ message: 'sportsFacility not found' });
     }
   }
+
+  // ToDo: manca summary
 }
