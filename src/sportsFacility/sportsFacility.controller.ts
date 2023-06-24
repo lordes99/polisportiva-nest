@@ -33,16 +33,21 @@ export class SportsFacilityController {
       return res.status(404).json({ message: 'SportsFacilities not found' });
   }
 
-  @Post(':facility-id/sports-fields')
+  @Post(':id/sports-fields')
   async createSportField(
-    @Param('facility-id') facilityId: number,
+    @Param('id') facilityId: number,
     @Body() sportsField: SportsField,
     @Res() res: Response,
   ): Promise<Response> {
-    const newSportsField = await this.sportsFacilityService.createSportField(
-      facilityId,
-      sportsField,
-    );
-    return res;
+    try {
+      const newSportsField = await this.sportsFacilityService.createSportField(
+        facilityId,
+        sportsField,
+      );
+      return res.status(200).json(newSportsField);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
   }
 }

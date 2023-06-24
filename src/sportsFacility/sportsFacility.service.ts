@@ -5,6 +5,7 @@ import { SportsFacility } from './sportsFacility.entity';
 import { SportsField } from '../sportsField/sportsField.entity';
 import { User } from '../users/user.entity';
 import { Address } from '../address/address.entity';
+import { PriceList } from '../priceList/priceList.entity';
 
 @Injectable()
 export class SportsFacilityService {
@@ -15,6 +16,10 @@ export class SportsFacilityService {
     private userRepository: Repository<User>,
     @InjectRepository(Address)
     private addressRepository: Repository<Address>,
+    @InjectRepository(SportsField)
+    private sportsFieldRepository: Repository<SportsField>,
+    @InjectRepository(PriceList)
+    private priceListRepository: Repository<PriceList>,
   ) {}
 
   // ToDo: refactor del codice
@@ -44,8 +49,20 @@ export class SportsFacilityService {
   async createSportField(
     facilityId: number,
     sportsField: SportsField,
-  ): Promise<null> {
-    return null;
-    // return this.sportsFacilityRepository.save(sp);
+  ): Promise<SportsField> {
+    const sportFacility = new SportsFacility();
+    sportFacility.id = facilityId;
+    sportsField.sportFacility = sportFacility;
+    this.assignEmptyFieldsType(sportsField);
+    sportsField.priceList = await this.priceListRepository.save(
+      sportsField.priceList,
+    );
+
+    return this.sportsFieldRepository.save(sportsField);
+  }
+
+  private assignEmptyFieldsType(sportsField: SportsField) {
+    sportsField.soccerFieldType = '';
+    sportsField.tennisFieldType = '';
   }
 }
