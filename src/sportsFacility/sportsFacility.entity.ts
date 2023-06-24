@@ -28,6 +28,7 @@ export class SportsFacility {
   address: Address;
 
   @ManyToOne(() => User, (user) => user.sportFacilities)
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @OneToMany(() => SportsField, (sportField) => sportField.sportFacility)

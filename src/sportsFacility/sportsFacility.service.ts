@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FindOneOptions, Repository } from 'typeorm';
 import { SportsFacility } from './sportsFacility.entity';
 import { SportsField } from '../sportsField/sportsField.entity';
-import { CreateSportsFacilityDto } from './sportsFacility.dto';
 import { User } from '../users/user.entity';
 import { Address } from '../address/address.entity';
 

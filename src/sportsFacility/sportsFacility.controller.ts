@@ -3,7 +3,6 @@ import { SportsFacilityService } from './sportsFacility.service';
 import { Response } from 'express';
 import { SportsFacility } from './sportsFacility.entity';
 import { SportsField } from '../sportsField/sportsField.entity';
-import { CreateSportsFacilityDto } from './sportsFacility.dto';
 
 @Controller('api/sports-facilities')
 export class SportsFacilityController {
@@ -16,9 +15,7 @@ export class SportsFacilityController {
   ): Promise<Response> {
     try {
       const newSportsFacility =
-        await this.sportsFacilityService.createSportFacility(
-          sportsFacility,
-        );
+        await this.sportsFacilityService.createSportFacility(sportsFacility);
       return res.status(200).json(newSportsFacility);
     } catch (error) {
       console.error(error);
