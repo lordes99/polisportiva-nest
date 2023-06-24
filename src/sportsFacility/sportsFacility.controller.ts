@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { SportsFacilityService } from './sportsFacility.service';
 import { Response } from 'express';
 import { SportsFacility } from './sportsFacility.entity';
@@ -24,13 +34,40 @@ export class SportsFacilityController {
   }
 
   @Get()
-  async getAllSportsFacilities(@Res() res: Response): Promise<Response> {
-    const sportsFacilities =
-      await this.sportsFacilityService.findAllSportsFacilities();
-    if (sportsFacilities !== null && sportsFacilities.length > 0) {
-      return res.status(200).json(sportsFacilities);
-    } else
-      return res.status(404).json({ message: 'SportsFacilities not found' });
+  async getAllSportsFacilityOrByUserId(
+    @Query('filter_by_owner_id') ownerId: number,
+    @Res() res: Response,
+  ): Promise<Response> {
+    if (ownerId) {
+      try {
+        const sportsFacilities =
+          await this.sportsFacilityService.findSportsFacilityByUserId(ownerId);
+        if (sportsFacilities !== null && sportsFacilities.length > 0) {
+          return res.status(200).json(sportsFacilities);
+        } else
+          return res
+            .status(404)
+            .json({ message: 'SportsFacilities not found' });
+      } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+    } else {
+      try {
+        const sportsFacilities =
+          await this.sportsFacilityService.findAllSportsFacilities();
+        if (sportsFacilities && sportsFacilities.length > 0) {
+          return res.status(200).json(sportsFacilities);
+        } else {
+          return res
+            .status(404)
+            .json({ message: 'SportsFacilities not found' });
+        }
+      } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+    }
   }
 
   @Post(':id/sports-fields')
@@ -48,6 +85,20 @@ export class SportsFacilityController {
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Internal server error' });
+    }
+  }
+
+  @Delete(':id')
+  async deleteSportsFacility(
+    @Param('id') id: number,
+    @Res() res: Response,
+  ): Promise<Response> {
+    const sportsFacility =
+      await this.sportsFacilityService.deleteSportsFacilityById(id);
+    if (sportsFacility) {
+      return res.status(200).json({ message: 'sportsFacility Deleted' });
+    } else {
+      return res.status(404).json({ message: 'sportsFacility not found' });
     }
   }
 }
