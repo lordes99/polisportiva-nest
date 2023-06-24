@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { PriceList } from '../priceList/priceList.entity';
 import { User } from '../users/user.entity';
 import { SportsFacility } from '../sportsFacility/sportsFacility.entity';
@@ -28,6 +34,7 @@ export class SportsField {
   priceList: PriceList;
 
   @ManyToOne(() => User, (user) => user.sportFields)
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @ManyToOne(

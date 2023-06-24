@@ -1,16 +1,38 @@
-import { Controller, Get, Res } from '@nestjs/common';
+import { Controller, Get, Query, Res } from '@nestjs/common';
 import { SportsFieldService } from './sportsField.service';
 import { Response } from 'express';
+import { elementAt } from 'rxjs';
 
 @Controller('api/sports-fields')
 export class SportsFieldController {
   constructor(private readonly sportsFieldService: SportsFieldService) {}
 
   @Get()
-  async getSportsFields(@Res() res: Response): Promise<Response> {
-    const sportsFields = await this.sportsFieldService.findAll();
-    if (sportsFields !== null && sportsFields.length > 0) {
-      return res.status(200).json(sportsFields);
-    } else return res.status(404).json({ message: 'SportsFields not found' });
+  async getAllSportsFields(
+    @Query('filter_by_owner_id') ownerId: number,
+    @Query('filter_by_sport') sport: string,
+    @Res() res: Response,
+  ): Promise<Response> {
+    try {
+      if (ownerId || sport) {
+        const sportsFields = await this.sportsFieldService.findSportOrOwnerId(
+          ownerId,
+          sport,
+        );
+        if (sportsFields !== null && sportsFields.length > 0) {
+          return res.status(200).json(sportsFields);
+        } else
+          return res.status(404).json({ message: 'SportsFields not found' });
+      } else {
+        const sportsFields = await this.sportsFieldService.findAll();
+        if (sportsFields !== null && sportsFields.length > 0) {
+          return res.status(200).json(sportsFields);
+        } else
+          return res.status(404).json({ message: 'SportsFields not found' });
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
   }
 }
