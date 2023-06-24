@@ -2,12 +2,13 @@ import {
   Column,
   Entity,
   JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+  ManyToOne, OneToMany,
+  PrimaryGeneratedColumn
+} from "typeorm";
 import { PriceList } from '../priceList/priceList.entity';
 import { User } from '../users/user.entity';
 import { SportsFacility } from '../sportsFacility/sportsFacility.entity';
+import { Reservation } from "../reservation/reservation.entity";
 
 @Entity()
 export class SportsField {
@@ -42,4 +43,7 @@ export class SportsField {
     (sportsFacility) => sportsFacility.sportFields,
   )
   sportFacility: SportsFacility;
+
+  @OneToMany(() => Reservation, (reservation) => reservation.sportsField)
+  reservations: Reservation[];
 }

@@ -11,6 +11,7 @@ import { SportsField } from './sportsField/sportsField.entity';
 import { SportsFacility } from './sportsFacility/sportsFacility.entity';
 import { SportsFieldModule } from './sportsField/sportsField.module';
 import { SportsFacilityModule } from './sportsFacility/sportsFacility.module';
+import { Reservation } from './reservation/reservation.entity';
 
 @Module({
   imports: [
@@ -24,7 +25,14 @@ import { SportsFacilityModule } from './sportsFacility/sportsFacility.module';
         username: 'admin',
         password: 'admin',
         database: 'polisportiva',
-        entities: [User, Address, PriceList, SportsField, SportsFacility],
+        entities: [
+          User,
+          Address,
+          PriceList,
+          SportsField,
+          SportsFacility,
+          Reservation,
+        ],
         synchronize: true,
       }),
       inject: [ConfigService], // Inietta il ConfigService nella factory function

@@ -8,6 +8,7 @@ import {
 import { Address } from '../address/address.entity';
 import { SportsField } from '../sportsField/sportsField.entity';
 import { SportsFacility } from '../sportsFacility/sportsFacility.entity';
+import { Reservation } from '../reservation/reservation.entity';
 
 @Entity()
 export class User {
@@ -40,4 +41,7 @@ export class User {
 
   @OneToMany(() => SportsFacility, (sportFacilities) => sportFacilities.user)
   sportFacilities: SportsFacility[];
+
+  @OneToMany(() => Reservation, (reservation) => reservation.sportsField)
+  reservations: Reservation[];
 }
