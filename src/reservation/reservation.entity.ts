@@ -3,11 +3,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ReservationStatus } from '../utils/reservationStatus';
 import { User } from '../users/user.entity';
 import { SportsField } from '../sportsField/sportsField.entity';
+import { ReservationRating } from '../reservationRating/reservationRating.entity';
 
 @Entity()
 export class Reservation {
@@ -35,4 +37,10 @@ export class Reservation {
 
   @ManyToOne(() => SportsField, (sportsField) => sportsField.reservations)
   sportsField: SportsField;
+
+  @OneToMany(
+    () => ReservationRating,
+    (reservationRating) => reservationRating.reservation,
+  )
+  reservationRatings: ReservationRating[];
 }

@@ -11,8 +11,8 @@ import {
 import { ReservationService } from './reservation.service';
 import { Response } from 'express';
 import { CreateReservationDto } from './reservation.dto';
-import { SportsField } from '../sportsField/sportsField.entity';
 import { ReservationStatus } from '../utils/reservationStatus';
+import { ReservationRating } from '../reservationRating/reservationRating.entity';
 
 @Controller('api/reservations')
 export class ReservationController {
@@ -89,6 +89,24 @@ export class ReservationController {
     }
   }
 
-  // ToDo: fare creaReservationRating da una reservation
+  @Post(':id/rating')
+  async createRating(
+    @Param('id') reservationId: number,
+    @Body() reservationRating: ReservationRating,
+    @Res() res: Response,
+  ): Promise<Response> {
+    try {
+      const newReservationRating =
+        await this.reservationService.createReservationRating(
+          reservationId,
+          reservationRating,
+        );
+      return res.status(200).json(newReservationRating);
+    } catch (error) {
+      console.error(error);
+      return res.status(error.status).json({ message: error.message });
+    }
+  }
+
   // ToDo: reservation/id
 }

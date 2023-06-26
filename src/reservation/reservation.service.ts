@@ -6,6 +6,7 @@ import { CreateReservationDto } from './reservation.dto';
 import { User } from '../users/user.entity';
 import { SportsField } from '../sportsField/sportsField.entity';
 import { ReservationStatus } from '../utils/reservationStatus';
+import { ReservationRating } from '../reservationRating/reservationRating.entity';
 
 @Injectable()
 export class ReservationService {
@@ -16,6 +17,8 @@ export class ReservationService {
     private userRepository: Repository<User>,
     @InjectRepository(SportsField)
     private sportsFieldRepository: Repository<SportsField>,
+    @InjectRepository(ReservationRating)
+    private reservationRatingRepository: Repository<ReservationRating>,
   ) {}
 
   async createReservation(
@@ -87,5 +90,23 @@ export class ReservationService {
     }
 
     return updateResult;
+  }
+
+  async createReservationRating(
+    reservationId: number,
+    reservationRating: ReservationRating,
+  ): Promise<ReservationRating> {
+    const reservation = await this.reservationRepository.findOne({
+      where: { id: reservationId },
+      // relations: ['user'],
+    });
+
+    if (!reservation) {
+      throw new NotFoundException(
+        'Reservation with ID ${reservationId} not found',
+      );
+    }
+    reservationRating.reservation = reservation;
+    return this.reservationRatingRepository.save(reservationRating);
   }
 }

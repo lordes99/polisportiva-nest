@@ -30,7 +30,6 @@ export class SportsFacilityController {
     } catch (error) {
       console.error(error);
       return res.status(error.status).json({ message: error.message });
-
     }
   }
 
@@ -52,7 +51,6 @@ export class SportsFacilityController {
       } catch (error) {
         console.error(error);
         return res.status(error.status).json({ message: error.message });
-
       }
     } else {
       try {
@@ -68,7 +66,6 @@ export class SportsFacilityController {
       } catch (error) {
         console.error(error);
         return res.status(error.status).json({ message: error.message });
-
       }
     }
   }
@@ -88,7 +85,6 @@ export class SportsFacilityController {
     } catch (error) {
       console.error(error);
       return res.status(error.status).json({ message: error.message });
-
     }
   }
 

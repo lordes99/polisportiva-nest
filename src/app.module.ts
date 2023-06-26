@@ -13,6 +13,7 @@ import { SportsFieldModule } from './sportsField/sportsField.module';
 import { SportsFacilityModule } from './sportsFacility/sportsFacility.module';
 import { Reservation } from './reservation/reservation.entity';
 import { ReservationModule } from './reservation/reservation.module';
+import { ReservationRating } from './reservationRating/reservationRating.entity';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ReservationModule } from './reservation/reservation.module';
           SportsField,
           SportsFacility,
           Reservation,
+          ReservationRating,
         ],
         synchronize: true,
       }),
