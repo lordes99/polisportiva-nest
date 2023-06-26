@@ -11,7 +11,7 @@ import {
 import { ReservationService } from './reservation.service';
 import { Response } from 'express';
 import { CreateReservationDto } from './reservation.dto';
-import { ReservationStatus } from '../utils/reservationStatus';
+import { ReservationStatus } from '../utils/enum/reservationStatus';
 import { ReservationRating } from '../reservationRating/reservationRating.entity';
 
 @Controller('api/reservations')

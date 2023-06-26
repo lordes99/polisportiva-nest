@@ -6,7 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ReservationStatus } from '../utils/reservationStatus';
+import { ReservationStatus } from '../utils/enum/reservationStatus';
 import { User } from '../users/user.entity';
 import { SportsField } from '../sportsField/sportsField.entity';
 import { ReservationRating } from '../reservationRating/reservationRating.entity';

@@ -102,5 +102,18 @@ export class SportsFacilityController {
     }
   }
 
-  // ToDo: manca summary
+  @Get(':id/reservations-summaries')
+  async getReservationSummaries(
+    @Param('id') facilityId: number,
+    @Query('start_date') startDate: Date,
+    @Query('end_date') endDate: Date,
+    @Res() res: Response,
+  ): Promise<Response> {
+    try {
+      return res;
+    } catch (error) {
+      console.error(error);
+      return res.status(error.status).json({ message: error.message });
+    }
+  }
 }

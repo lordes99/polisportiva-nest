@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateReservationDto } from './reservation.dto';
 import { User } from '../users/user.entity';
 import { SportsField } from '../sportsField/sportsField.entity';
-import { ReservationStatus } from '../utils/reservationStatus';
+import { ReservationStatus } from '../utils/enum/reservationStatus';
 import { ReservationRating } from '../reservationRating/reservationRating.entity';
 
 @Injectable()

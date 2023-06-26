@@ -1,6 +1,7 @@
 import { Controller, Get, Query, Res } from '@nestjs/common';
 import { SportsFieldService } from './sportsField.service';
 import { Response } from 'express';
+import { SportType } from "../utils/enum/sportType";
 
 @Controller('api/sports-fields')
 export class SportsFieldController {
@@ -9,7 +10,7 @@ export class SportsFieldController {
   @Get()
   async getAllSportsFields(
     @Query('filter_by_owner_id') ownerId: number,
-    @Query('filter_by_sport') sport: string,
+    @Query('filter_by_sport') sport: SportType,
     @Res() res: Response,
   ): Promise<Response> {
     try {

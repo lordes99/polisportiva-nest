@@ -9,6 +9,7 @@ import { PriceList } from '../priceList/priceList.entity';
 import { User } from '../users/user.entity';
 import { SportsFacility } from '../sportsFacility/sportsFacility.entity';
 import { Reservation } from "../reservation/reservation.entity";
+import { SportType } from "../utils/enum/sportType";
 
 @Entity()
 export class SportsField {
@@ -19,7 +20,7 @@ export class SportsField {
   name: string;
 
   @Column()
-  sport: string;
+  sport: SportType;
 
   @Column()
   isIndoor: boolean;
