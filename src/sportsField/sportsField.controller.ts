@@ -1,7 +1,6 @@
 import { Controller, Get, Query, Res } from '@nestjs/common';
 import { SportsFieldService } from './sportsField.service';
 import { Response } from 'express';
-import { elementAt } from 'rxjs';
 
 @Controller('api/sports-fields')
 export class SportsFieldController {

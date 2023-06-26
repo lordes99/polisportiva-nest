@@ -5,11 +5,14 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Res,
 } from '@nestjs/common';
 import { ReservationService } from './reservation.service';
 import { Response } from 'express';
 import { CreateReservationDto } from './reservation.dto';
+import { SportsField } from '../sportsField/sportsField.entity';
+import { ReservationStatus } from '../utils/reservationStatus';
 
 @Controller('api/reservations')
 export class ReservationController {
@@ -63,6 +66,29 @@ export class ReservationController {
       return res.status(500).json({ message: 'Internal server error' });
     }
   }
+
+  @Put(':id/status')
+  async changeReservationStatus(
+    @Param('id') reservationId: number,
+    @Body('state') state: ReservationStatus,
+    @Res() res: Response,
+  ): Promise<Response> {
+    try {
+      const reservation = await this.reservationService.changeStatus(
+        reservationId,
+        state,
+      );
+      if (reservation) {
+        return res.status(200).json({ message: 'reservation updated' });
+      } else {
+        return res.status(404).json({ message: 'reservation not found' });
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: error.message });
+    }
+  }
+
   // ToDo: fare creaReservationRating da una reservation
   // ToDo: aggiorna stato reservation PUT
   // ToDo: reservation/id
