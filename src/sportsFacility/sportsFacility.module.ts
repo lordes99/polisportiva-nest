@@ -7,6 +7,7 @@ import { User } from '../users/user.entity';
 import { Address } from '../address/address.entity';
 import { SportsField } from '../sportsField/sportsField.entity';
 import { PriceList } from '../priceList/priceList.entity';
+import { Reservation } from '../reservation/reservation.entity';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { PriceList } from '../priceList/priceList.entity';
       Address,
       SportsField,
       PriceList,
+      Reservation,
     ]),
   ],
   providers: [SportsFacilityService],

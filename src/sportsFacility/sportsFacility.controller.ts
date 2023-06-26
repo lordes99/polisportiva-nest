@@ -13,6 +13,7 @@ import { SportsFacilityService } from './sportsFacility.service';
 import { Response } from 'express';
 import { SportsFacility } from './sportsFacility.entity';
 import { SportsField } from '../sportsField/sportsField.entity';
+import { ReservationSummaryDTO } from '../utils/DTO/reservationSummaryDTO';
 
 @Controller('api/sports-facilities')
 export class SportsFacilityController {
@@ -103,14 +104,24 @@ export class SportsFacilityController {
   }
 
   @Get(':id/reservations-summaries')
-  async getReservationSummaries(
+  async getReservationSummary(
     @Param('id') facilityId: number,
     @Query('start_date') startDate: Date,
     @Query('end_date') endDate: Date,
     @Res() res: Response,
   ): Promise<Response> {
     try {
-      return res;
+      const reservationSummary: ReservationSummaryDTO =
+        await this.sportsFacilityService.createReservationSummary(
+          facilityId,
+          startDate,
+          endDate,
+        );
+      if (reservationSummary) {
+        return res.status(200).json(reservationSummary);
+      } else {
+        return res.status(404).json({ message: 'Sumary vuoto' });
+      }
     } catch (error) {
       console.error(error);
       return res.status(error.status).json({ message: error.message });

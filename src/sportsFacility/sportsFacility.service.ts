@@ -6,6 +6,16 @@ import { SportsField } from '../sportsField/sportsField.entity';
 import { User } from '../users/user.entity';
 import { Address } from '../address/address.entity';
 import { PriceList } from '../priceList/priceList.entity';
+import { ReservationSummaryDTO } from '../utils/DTO/reservationSummaryDTO';
+import { Reservation } from '../reservation/reservation.entity';
+import { ReservationReportDTO } from '../utils/DTO/reservationReportDTO';
+import { SportType } from '../utils/enum/sportType';
+import { ReservationStatus } from '../utils/enum/reservationStatus';
+
+const VOLLEYBALL_INDEX = 0;
+const SOCCER_INDEX = 1;
+const BASKET_INDEX = 2;
+const TENNIS_INDEX = 3;
 
 @Injectable()
 export class SportsFacilityService {
@@ -20,6 +30,8 @@ export class SportsFacilityService {
     private sportsFieldRepository: Repository<SportsField>,
     @InjectRepository(PriceList)
     private priceListRepository: Repository<PriceList>,
+    @InjectRepository(Reservation)
+    private reservationRepository: Repository<Reservation>,
   ) {}
 
   // ToDo: refactor del codice
@@ -100,5 +112,114 @@ export class SportsFacilityService {
       );
     }
     return sportFacilities;
+  }
+
+  async createReservationSummary(
+    facilityId: number,
+    startDate: Date,
+    endDate: Date,
+  ): Promise<ReservationSummaryDTO> {
+    const reservationSummary: ReservationSummaryDTO =
+      this.buildReservationSummary(facilityId, startDate, endDate);
+
+    const facility: SportsFacility | null =
+      await this.sportsFacilityRepository.findOne({
+        where: { id: facilityId },
+        relations: ['sportFields'],
+      });
+
+    if (!facility) {
+      throw new NotFoundException(`Facility with ID ${facilityId} not found`);
+    }
+    // ToDo: controllare le date
+    const allReservationForFacility: Reservation[] = [];
+    for (const sp of facility.sportFields) {
+      const reservations: Reservation[] = await this.reservationRepository.find(
+        {
+          where: { sportsField: sp },
+          relations: ['sportsField'],
+        },
+      );
+
+      allReservationForFacility.push(...reservations);
+    }
+
+    if (allReservationForFacility.length > 0) {
+      this.countReservation(allReservationForFacility, reservationSummary);
+    }
+
+    return reservationSummary;
+  }
+
+  private countReservation(
+    reservations: Reservation[],
+    reservationSummary: ReservationSummaryDTO,
+  ) {
+    for (const res of reservations) {
+      const reservationReportDTO =
+        reservationSummary.sportsReservationReports[
+          this.chooseSport(res.sportsField.sport)
+        ];
+      reservationReportDTO.totalReservations += 1;
+      reservationReportDTO.totalRevenue += res.price;
+      switch (res.state) {
+        case ReservationStatus.ACCEPTED: {
+          reservationReportDTO.acceptedReservations += 1;
+          break;
+        }
+        case ReservationStatus.PENDING: {
+          reservationReportDTO.pendingReservations += 1;
+          break;
+        }
+        case ReservationStatus.REJECTED: {
+          reservationReportDTO.rejectedReservations += 1;
+          break;
+        }
+      }
+    }
+  }
+
+  private chooseSport(sportsField: SportType): number {
+    switch (sportsField) {
+      case SportType.TENNIS:
+        return TENNIS_INDEX;
+      case SportType.SOCCER:
+        return SOCCER_INDEX;
+      case SportType.BASKET:
+        return BASKET_INDEX;
+      case SportType.VOLLEYBALL:
+        return VOLLEYBALL_INDEX;
+    }
+  }
+
+  private buildFirstReport(sportType: SportType): ReservationReportDTO {
+    const reservationReport: ReservationReportDTO = new ReservationReportDTO();
+    reservationReport.totalReservations = 0;
+    reservationReport.sport = sportType;
+    reservationReport.totalRevenue = 0;
+    reservationReport.rejectedReservations = 0;
+    reservationReport.acceptedReservations = 0;
+    reservationReport.pendingReservations = 0;
+    return reservationReport;
+  }
+
+  private buildReservationSummary(
+    facilityId: number,
+    startDate: Date,
+    endDate: Date,
+  ): ReservationSummaryDTO {
+    const reservationSummary = new ReservationSummaryDTO();
+    reservationSummary.sportsFacilityID = facilityId;
+    reservationSummary.startDate = startDate;
+    reservationSummary.endDate = endDate;
+    reservationSummary.createAt = new Date();
+    reservationSummary.sportsReservationReports = [
+      this.buildFirstReport(SportType.VOLLEYBALL),
+      this.buildFirstReport(SportType.SOCCER),
+      this.buildFirstReport(SportType.BASKET),
+      this.buildFirstReport(SportType.TENNIS),
+    ];
+
+    return reservationSummary;
   }
 }

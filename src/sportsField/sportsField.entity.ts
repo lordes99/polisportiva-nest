@@ -2,14 +2,15 @@ import {
   Column,
   Entity,
   JoinColumn,
-  ManyToOne, OneToMany,
-  PrimaryGeneratedColumn
-} from "typeorm";
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { PriceList } from '../priceList/priceList.entity';
 import { User } from '../users/user.entity';
 import { SportsFacility } from '../sportsFacility/sportsFacility.entity';
-import { Reservation } from "../reservation/reservation.entity";
-import { SportType } from "../utils/enum/sportType";
+import { Reservation } from '../reservation/reservation.entity';
+import { SportType } from '../utils/enum/sportType';
 
 @Entity()
 export class SportsField {
