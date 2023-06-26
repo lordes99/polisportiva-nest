@@ -65,4 +65,12 @@ export class ReservationService {
 
     return newReservation;
   }
+
+  async findAllReservations(): Promise<Reservation[]> {
+    return this.reservationRepository.find();
+  }
+
+  deleteReservation(id: number) {
+    return this.reservationRepository.delete(id);
+  }
 }
