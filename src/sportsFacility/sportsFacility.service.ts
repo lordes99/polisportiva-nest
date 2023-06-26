@@ -131,7 +131,6 @@ export class SportsFacilityService {
     if (!facility) {
       throw new NotFoundException(`Facility with ID ${facilityId} not found`);
     }
-    // ToDo: controllare le date
     const allReservationForFacility: Reservation[] = [];
     for (const sp of facility.sportFields) {
       const reservations: Reservation[] = await this.reservationRepository.find(
@@ -156,27 +155,48 @@ export class SportsFacilityService {
     reservationSummary: ReservationSummaryDTO,
   ) {
     for (const res of reservations) {
-      const reservationReportDTO =
-        reservationSummary.sportsReservationReports[
-          this.chooseSport(res.sportsField.sport)
-        ];
-      reservationReportDTO.totalReservations += 1;
-      reservationReportDTO.totalRevenue += res.price;
-      switch (res.state) {
-        case ReservationStatus.ACCEPTED: {
-          reservationReportDTO.acceptedReservations += 1;
-          break;
-        }
-        case ReservationStatus.PENDING: {
-          reservationReportDTO.pendingReservations += 1;
-          break;
-        }
-        case ReservationStatus.REJECTED: {
-          reservationReportDTO.rejectedReservations += 1;
-          break;
+      if (
+        this.checkDateIsInRange(
+          res.startDate,
+          reservationSummary.startDate,
+          reservationSummary.endDate,
+        ) &&
+        this.checkDateIsInRange(
+          res.endDate,
+          reservationSummary.startDate,
+          reservationSummary.endDate,
+        )
+      ) {
+        const reservationReportDTO =
+          reservationSummary.sportsReservationReports[
+            this.chooseSport(res.sportsField.sport)
+          ];
+        reservationReportDTO.totalReservations += 1;
+        reservationReportDTO.totalRevenue += res.price;
+        switch (res.state) {
+          case ReservationStatus.ACCEPTED: {
+            reservationReportDTO.acceptedReservations += 1;
+            break;
+          }
+          case ReservationStatus.PENDING: {
+            reservationReportDTO.pendingReservations += 1;
+            break;
+          }
+          case ReservationStatus.REJECTED: {
+            reservationReportDTO.rejectedReservations += 1;
+            break;
+          }
         }
       }
     }
+  }
+
+  private checkDateIsInRange(
+    dateToCheck: Date,
+    startDate: Date,
+    endDate: Date,
+  ): boolean {
+    return dateToCheck >= startDate && dateToCheck <= endDate;
   }
 
   private chooseSport(sportsField: SportType): number {
@@ -210,8 +230,8 @@ export class SportsFacilityService {
   ): ReservationSummaryDTO {
     const reservationSummary = new ReservationSummaryDTO();
     reservationSummary.sportsFacilityID = facilityId;
-    reservationSummary.startDate = startDate;
-    reservationSummary.endDate = endDate;
+    reservationSummary.startDate = new Date(startDate);
+    reservationSummary.endDate = new Date(endDate);
     reservationSummary.createAt = new Date();
     reservationSummary.sportsReservationReports = [
       this.buildFirstReport(SportType.VOLLEYBALL),
