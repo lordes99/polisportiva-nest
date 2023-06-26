@@ -14,6 +14,7 @@ import { SportsFacilityModule } from './sportsFacility/sportsFacility.module';
 import { Reservation } from './reservation/reservation.entity';
 import { ReservationModule } from './reservation/reservation.module';
 import { ReservationRating } from './reservationRating/reservationRating.entity';
+import { ReservationRatingModule } from './reservationRating/reservationRating.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { ReservationRating } from './reservationRating/reservationRating.entity'
     SportsFieldModule,
     SportsFacilityModule,
     ReservationModule,
+    ReservationRatingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
