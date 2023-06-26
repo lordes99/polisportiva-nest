@@ -29,7 +29,8 @@ export class SportsFacilityController {
       return res.status(200).json(newSportsFacility);
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'Internal server error' });
+      return res.status(error.status).json({ message: error.message });
+
     }
   }
 
@@ -50,7 +51,8 @@ export class SportsFacilityController {
             .json({ message: 'SportsFacilities not found' });
       } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return res.status(error.status).json({ message: error.message });
+
       }
     } else {
       try {
@@ -65,7 +67,8 @@ export class SportsFacilityController {
         }
       } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return res.status(error.status).json({ message: error.message });
+
       }
     }
   }
@@ -84,7 +87,8 @@ export class SportsFacilityController {
       return res.status(200).json(newSportsField);
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'Internal server error' });
+      return res.status(error.status).json({ message: error.message });
+
     }
   }
 
