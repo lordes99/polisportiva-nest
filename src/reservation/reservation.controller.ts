@@ -31,7 +31,6 @@ export class ReservationController {
     } catch (error) {
       console.error(error);
       return res.status(error.status).json({ message: error.message });
-
     }
   }
 
@@ -47,7 +46,6 @@ export class ReservationController {
     } catch (error) {
       console.error(error);
       return res.status(error.status).json({ message: error.message });
-
     }
   }
 
@@ -66,7 +64,6 @@ export class ReservationController {
     } catch (error) {
       console.error(error);
       return res.status(error.status).json({ message: error.message });
-
     }
   }
 
@@ -93,6 +90,5 @@ export class ReservationController {
   }
 
   // ToDo: fare creaReservationRating da una reservation
-  // ToDo: aggiorna stato reservation PUT
   // ToDo: reservation/id
 }

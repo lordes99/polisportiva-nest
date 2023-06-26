@@ -32,7 +32,6 @@ export class SportsFieldController {
     } catch (error) {
       console.error(error);
       return res.status(error.status).json({ message: error.message });
-
     }
   }
 }
