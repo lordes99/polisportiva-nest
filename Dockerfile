@@ -37,6 +37,8 @@ FROM node:18.12.1 AS builder
 # Imposta la variabile d'ambiente DB_HOST
 ENV DB_HOST=db
 
+LABEL authors="Lorenzo Destriere"
+
 WORKDIR /app
 
 # Copia i file di dipendenza e il file package.json

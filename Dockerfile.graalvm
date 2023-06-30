@@ -43,34 +43,23 @@ RUN apt-get update && apt-get install -y curl
 
 #RUN java --version
 
-# Usa l'immagine di base di Node.js
+
 FROM ghcr.io/graalvm/nodejs:ol9-java11-22.3.2
 
 # Imposta la variabile d'ambiente DB_HOST
-ENV DB_HOST=10.10.0.2
+ENV DB_HOST=db
 
 LABEL authors="Lorenzo Destriere"
 
-# Imposta il percorso di lavoro all'interno del contenitore
 WORKDIR /app
 
-# Copia i file package.json e package-lock.json nella directory di lavoro
 COPY package*.json ./
 
-# Copia il file package-lock.json, se presente
-COPY package-lock.json ./
+RUN npm install
 
-# Copia il file tsconfig.json
-COPY tsconfig.json ./
+COPY . .
 
-# Copia la directory node_modules dal tuo ambiente di sviluppo al container
-COPY node_modules/ ./node_modules/
+# Compila l'applicazione Nest.js
+RUN npm run build
 
-# Copia i file sorgente del progetto
-COPY src/ ./src/
-
-# Monta il codice sorgente del progetto all'interno del container
-VOLUME ["/app/src"]
-
-# Avvia il server o l'applicazione
 CMD ["npm", "start"]
