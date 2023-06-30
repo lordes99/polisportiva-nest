@@ -40,10 +40,20 @@ Eseguire il seguente comando nella cartella del progetto. Così si utilizza node
 $ make up
 ```
 
+è possibile anche eseguire solo la build dell'immagine:
+```bash
+make build
+```
+
 Per utilizzare la graalVm:
 ```bash
 $ make upGraalVm
 ```
+è possibile anche eseguire solo la build dell'immagine:
+```bash
+make buildGraalVm
+```
+
 -----------------------------------------------------------------------------------------------------------------------
 
 
