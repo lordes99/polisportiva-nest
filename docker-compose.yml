@@ -22,27 +22,12 @@ services:
       - "5432:5432"
     volumes:
       - postgres-volume:/var/lib/postgresql/data
-    networks:
-      network:
-        ipv4_address: 10.10.0.2
 
-  poli-nest:
-    build :
-      dockerfile: ${DOCKERFILE}
-      context: .
-    expose:
-      - "3000"
+  polisportiva-nest-js:
+    image: polisportiva-nest-js:latest
+#    environment:
+#      DB_HOST: db
     ports:
       - "3000:3000"
     depends_on:
       - db
-    networks:
-      network:
-        ipv4_address: 10.10.0.3
-
-networks:
-  network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.10.0.0/16
