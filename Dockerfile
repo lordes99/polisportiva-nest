@@ -1,59 +1,54 @@
-# Utilizza un'immagine di base che contiene già le dipendenze installate
-FROM node:18.12.1
-
-# Imposta la variabile d'ambiente DB_HOST
-ENV DB_HOST=10.10.0.2
-
-LABEL authors="Lorenzo Destriere"
-
-# Imposta la directory di lavoro all'interno del container
-WORKDIR /app
-
-# Copia i file di dipendenza del progetto
-COPY package*.json ./
-
-# Copia il file package-lock.json, se presente
-COPY package-lock.json ./
-
-# Copia il file tsconfig.json
-COPY tsconfig.json ./
-
-# Copia la directory node_modules dal tuo ambiente di sviluppo al container
-COPY node_modules/ ./node_modules/
-
-# Copia i file sorgente del progetto
-COPY src/ ./src/
-
-# Monta il codice sorgente del progetto all'interno del container
-VOLUME ["/app/src"]
-
-# Avvia il server o l'applicazione
-CMD ["npm", "start"]
-
-
-## Usa l'immagine base di Node.js
+## Utilizza un'immagine di base che contiene già le dipendenze installate
 #FROM node:18.12.1
 #
-## Imposta il percorso di lavoro all'interno del contenitore
+## Imposta la variabile d'ambiente DB_HOST
+#ENV DB_HOST=db
+#
+#LABEL authors="Lorenzo Destriere"
+#
+## Imposta la directory di lavoro all'interno del container
 #WORKDIR /app
 #
 ## Copia i file di dipendenza del progetto
 #COPY package*.json ./
 #
-## pulisce la cache
-#RUN rm -rf node_modules && npm cache clean --force
+## Copia il file package-lock.json, se presente
+#COPY package-lock.json ./
 #
-## Installa le dipendenze
-#RUN npm install
+## Copia il file tsconfig.json
+#COPY tsconfig.json ./
 #
-## Copia il codice sorgente nell'immagine
-#COPY . .
+## Copia la directory node_modules dal tuo ambiente di sviluppo al container
+#COPY node_modules/ ./node_modules/
 #
-## Compila il progetto TypeScript
-#RUN npm run build
+## Copia i file sorgente del progetto
+#COPY src/ ./src/
 #
-## Esponi la porta specificata dalla tua applicazione NestJS
-#EXPOSE 3000
+## Monta il codice sorgente del progetto all'interno del container
+#VOLUME ["/app/src"]
 #
-## Avvia l'applicazione quando il contenitore viene eseguito
-#CMD ["node", "dist/main"]
+## Avvia il server o l'applicazione
+#CMD ["npm", "start"]
+
+######################################################################################################################
+# Fase di build
+FROM node:18.12.1 AS builder
+
+# Imposta la variabile d'ambiente DB_HOST
+ENV DB_HOST=db
+
+WORKDIR /app
+
+# Copia i file di dipendenza e il file package.json
+COPY package*.json ./
+
+# Installa le dipendenze
+RUN npm install
+
+# Copia il codice dell'applicazione
+COPY . .
+
+# Compila l'applicazione Nest.js
+RUN npm run build
+
+CMD ["npm", "start"]
