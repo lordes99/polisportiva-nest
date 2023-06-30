@@ -158,6 +158,10 @@ export class SportsFacilityService {
       if (
         this.checkDateIsInRange(
           res.startDate,
+          reservationSummary.startDate,
+          reservationSummary.endDate,
+        ) &&
+        this.checkDateIsInRange(
           res.endDate,
           reservationSummary.startDate,
           reservationSummary.endDate,
@@ -188,19 +192,6 @@ export class SportsFacilityService {
   }
 
   private checkDateIsInRange(
-    dateToCheckStart: Date,
-    dateToCheckEnd: Date,
-    startDate: Date,
-    endDate: Date,
-  ): boolean {
-    let result = true;
-    if (startDate && endDate) {
-      result = this.checkDate(dateToCheckStart, startDate, endDate);
-    }
-    return result;
-  }
-
-  private checkDate(
     dateToCheck: Date,
     startDate: Date,
     endDate: Date,
@@ -239,12 +230,8 @@ export class SportsFacilityService {
   ): ReservationSummaryDTO {
     const reservationSummary = new ReservationSummaryDTO();
     reservationSummary.sportsFacilityID = facilityId;
-    if (startDate) {
-      reservationSummary.startDate = new Date(startDate);
-    }
-    if (endDate) {
-      reservationSummary.endDate = new Date(endDate);
-    }
+    reservationSummary.startDate = new Date(startDate);
+    reservationSummary.endDate = new Date(endDate);
     reservationSummary.createAt = new Date();
     reservationSummary.sportsReservationReports = [
       this.buildFirstReport(SportType.VOLLEYBALL),
