@@ -34,25 +34,42 @@ $ npm run start --DB_HOST=localhost
 
 ## Dockerize
 
-Eseguire il seguente comando nella cartella del progetto. Così si utilizza node:18.12.1
+Se stai avviando l'applicazione per la prima volta segui il punto 1:
+1. Eseguire il seguente comando nella cartella del progetto. 
+    Così si utilizza node:18.12.1
 
-```bash
-$ make up
-```
+    ```bash
+    $ make upAndBuild
+    ```
+    
+    è possibile anche eseguire solo la build dell'immagine:
+    ```bash
+    make build
+    ```
+    
+    Per utilizzare la graalVm:
+    ```bash
+    $ make upAndBuildGraalVm
+    ```
+    è possibile anche eseguire solo la build dell'immagine:
+    ```bash
+    make buildGraalVm
+    ```
+   
 
-è possibile anche eseguire solo la build dell'immagine:
-```bash
-make build
-```
 
-Per utilizzare la graalVm:
-```bash
-$ make upGraalVm
-```
-è possibile anche eseguire solo la build dell'immagine:
-```bash
-make buildGraalVm
-```
+2. Eseguire il seguente comando nella cartella del progetto.
+   Così si utilizza node:18.12.1
+
+    ```bash
+    $ make up
+    ```
+
+   Per utilizzare la graalVm:
+
+    ```bash
+    $ make upGraalVm
+    ```
 
 -----------------------------------------------------------------------------------------------------------------------
 
