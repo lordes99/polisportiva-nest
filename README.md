@@ -71,6 +71,17 @@ Se stai avviando l'applicazione per la prima volta segui il punto 1:
     $ make upGraalVm
     ```
 
+## See CPU and MEM stats
+
+1. Spostati nella seguente directory:
+```bash
+$ cd captureCPUAndMemData
+```
+2. Esegui il seguente comando:
+```bash
+$ make captureStats
+```
+
 -----------------------------------------------------------------------------------------------------------------------
 
 
