@@ -10,7 +10,10 @@ build: config
 retag: build
 	docker tag polisportiva-nest-js:$(COMMIT_ID) polisportiva-nest-js:latest
 
-up: retag
+upAndBuild: retag
+	docker-compose up
+
+up:
 	docker-compose up
 
 buildGralvm: config
@@ -19,7 +22,10 @@ buildGralvm: config
 retagGralvm: buildGralvm
 	docker tag polisportiva-nest-js:gralvm-$(COMMIT_ID) polisportiva-nest-js:graalvm-latest
 
-upGraalVm: retagGralvm
+upAndBuildGraalVm: retagGralvm
+	docker-compose -f docker-compose-GRAALVM.yml up
+
+upGraalVm:
 	docker-compose -f docker-compose-GRAALVM.yml up
 
 upOnlyDb:
