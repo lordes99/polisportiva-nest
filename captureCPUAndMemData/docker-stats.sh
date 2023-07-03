@@ -7,5 +7,5 @@ while true; do
     stats_output=$(docker stats --no-stream | tail -n 2)
     echo "$stats_output" >> stats.csv
     echo >> stats.csv
-    sleep 1
+    sleep 5
 done
