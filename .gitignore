@@ -293,3 +293,4 @@ dist
 
 #STATS_CSV
 captureCPUAndMemData/stats.csv
+captureCPUAndMemData/result
